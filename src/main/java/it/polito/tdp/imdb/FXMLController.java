@@ -5,6 +5,8 @@
 package it.polito.tdp.imdb;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.imdb.model.Model;
@@ -35,7 +37,7 @@ public class FXMLController {
     private Button btnCercaAffini; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Integer> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxRegista"
     private ComboBox<?> boxRegista; // Value injected by FXMLLoader
@@ -76,6 +78,11 @@ public class FXMLController {
    public void setModel(Model model) {
     	
     	this.model = model;
+    	List<Integer> anni = new ArrayList<Integer>();
+    	anni.add(2004);
+    	anni.add(2005);
+    	anni.add(2006);
+    	this.boxAnno.getItems().addAll(anni);
     	
     }
     
