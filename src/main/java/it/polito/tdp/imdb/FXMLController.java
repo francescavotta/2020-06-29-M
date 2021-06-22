@@ -91,8 +91,12 @@ public class FXMLController {
     	int c;
     	try {
     		c = Integer.parseInt(txtAttoriCondivisi.getText());
-    		
-    		txtResult.appendText(model.cercaCammino(d, c).toString());
+    		List<Director> director = model.cercaCammino(d, c);
+    		String stampa = "";
+    		for(Director dd: director) {
+    			stampa += dd.toString() +" \n";
+    		}
+    		txtResult.appendText(stampa);
     		txtResult.appendText("Il numero di attori è " + model.pesoMigliore());
     	}catch(NumberFormatException nfe) {
     		txtResult.appendText("Inserire numero valido!");

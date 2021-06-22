@@ -95,20 +95,23 @@ public class Model {
 			return;
 		}else {
 			//controllo se fosse ottima
-			if(attori > pesoMigliore)
+			if(parziale.size() > soluzioneMigliore.size())
 				pesoMigliore = attori;
 				this.soluzioneMigliore = new ArrayList<>(parziale);	
 		}
 		
 		Director ultimo = parziale.get(parziale.size()-1);
 		for(Director d: Graphs.neighborListOf(grafo, ultimo)) {
-			parziale.add(d);
-			DefaultWeightedEdge e = grafo.getEdge(d, ultimo);
-			int peso = (int) grafo.getEdgeWeight(e);
-			attori = attori + peso;
-			ricorsione(parziale, pesoMax, attori);
-			parziale.remove(parziale.size()-1);
-			attori = attori - peso;
+			if(!parziale.contains(d)) {
+				parziale.add(d);
+				DefaultWeightedEdge e = grafo.getEdge(d, ultimo);
+				int peso = (int) grafo.getEdgeWeight(e);
+				attori = attori + peso;
+				ricorsione(parziale, pesoMax, attori);
+				parziale.remove(parziale.size()-1);
+				attori = attori - peso;
+			}
+			
 		}
 	}
 	
