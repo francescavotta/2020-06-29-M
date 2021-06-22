@@ -1,6 +1,6 @@
 package it.polito.tdp.imdb.model;
 
-public class Arco {
+public class Arco implements Comparable<Arco>{
 	
 	private Director d1;
 	private Director d2;
@@ -35,6 +35,12 @@ public class Arco {
 
 	public void setPeso(int peso) {
 		this.peso = peso;
+	}
+
+	@Override
+	public int compareTo(Arco o) {
+		
+		return -(this.peso - o.peso);
 	}
 	
 	

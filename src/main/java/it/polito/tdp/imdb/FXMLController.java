@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.imdb.model.Arco;
+import it.polito.tdp.imdb.model.Director;
 import it.polito.tdp.imdb.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +42,7 @@ public class FXMLController {
     private ComboBox<Integer> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxRegista"
-    private ComboBox<?> boxRegista; // Value injected by FXMLLoader
+    private ComboBox<Director> boxRegista; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtAttoriCondivisi"
     private TextField txtAttoriCondivisi; // Value injected by FXMLLoader
@@ -57,12 +59,24 @@ public class FXMLController {
     		return;
     	}else {
     		txtResult.appendText(model.creaGrafo(anno));
+    		this.boxRegista.getItems().addAll(model.getVertici());
     	}
 
     }
 
     @FXML
     void doRegistiAdiacenti(ActionEvent event) {
+    	
+    	Director d = this.boxRegista.getValue();
+    	if(d==null) {
+    		txtResult.appendText("Scegliere un anno dalla tendina!");
+    		return;
+    	}else {
+    		List <Arco> archi = model.getAdiacenti(d);
+    		for(Arco a: archi) {
+    			txtResult.appendText("vicino: " + a.getD2() + " peso " + a.getPeso() + "\n");
+    		}
+    	}
 
     }
 

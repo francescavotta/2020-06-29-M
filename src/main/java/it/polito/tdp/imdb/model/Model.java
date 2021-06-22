@@ -1,5 +1,7 @@
 package it.polito.tdp.imdb.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ public class Model {
 	Map<Integer, Director> mapId;
 	ImdbDAO dao;
 	Graph <Director, DefaultWeightedEdge> grafo;
+	List<Director> vertici;
 	
 	public Model() {
 		dao = new ImdbDAO();
@@ -31,7 +34,7 @@ public class Model {
 		}
 		
 		//creo i vertici
-		List<Director> vertici = dao.getVertici(anno, mapId);
+		vertici = dao.getVertici(anno, mapId);
 		Graphs.addAllVertices(grafo, vertici);
 		
 		//creo gli archi
@@ -39,13 +42,33 @@ public class Model {
 			if(grafo.containsEdge(a.getD1(), a.getD2())) {
 				DefaultWeightedEdge e = grafo.getEdge(a.getD1(), a.getD2());
 				int peso = (int) grafo.getEdgeWeight(e);
-				peso += a.getPeso();
+				//peso += a.getPeso();
+				a.setPeso(peso);
 				grafo.setEdgeWeight(e, peso);	
 			}else {
 				Graphs.addEdge(grafo, a.getD1(), a.getD2(), a.getPeso());
 			}
 		}
-		return String.format("Il grafo è stato creato con %d vertici e %d archi", grafo.vertexSet().size(), grafo.edgeSet().size() );
+		return String.format("Il grafo è stato creato con %d vertici e %d archi \n", grafo.vertexSet().size(), grafo.edgeSet().size() );
+	}
+
+	public List<Director> getVertici() {
+		
+		return vertici;
+	}
+	
+	public List<Arco> getAdiacenti(Director d){
+		List <Arco> result = new ArrayList<>();
+		
+		for(Director dd: Graphs.neighborListOf(grafo, d)) {
+			DefaultWeightedEdge e = grafo.getEdge(d, dd);
+			
+			Arco arco = new Arco(d, dd, (int) grafo.getEdgeWeight(e) );
+			result.add(arco);
+		}
+		Collections.sort(result);
+		return result;
+		
 	}
 	
 
