@@ -50,6 +50,14 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	txtResult.clear();
+    	Integer anno = this.boxAnno.getValue();
+    	if(anno == null) {
+    		txtResult.appendText("Scegliere un anno dalla tendina!");
+    		return;
+    	}else {
+    		txtResult.appendText(model.creaGrafo(anno));
+    	}
 
     }
 
