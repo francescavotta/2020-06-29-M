@@ -82,6 +82,22 @@ public class FXMLController {
 
     @FXML
     void doRicorsione(ActionEvent event) {
+    	txtResult.clear();
+    	Director d = this.boxRegista.getValue();
+    	if(d==null) {
+    		txtResult.appendText("Scegliere un anno dalla tendina!");
+    		return;
+    	}
+    	int c;
+    	try {
+    		c = Integer.parseInt(txtAttoriCondivisi.getText());
+    		
+    		txtResult.appendText(model.cercaCammino(d, c).toString());
+    		txtResult.appendText("Il numero di attori è " + model.pesoMigliore());
+    	}catch(NumberFormatException nfe) {
+    		txtResult.appendText("Inserire numero valido!");
+    		return;
+    	}
 
     }
 
